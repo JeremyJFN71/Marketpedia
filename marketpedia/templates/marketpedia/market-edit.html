@@ -1,0 +1,143 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'message.html' %}
+
+<div class="container my-5">
+    <div class="card">
+        <div class="card-body">
+            <div class="row mb-5">
+
+                <div class="col">
+                    <a href="{% url 'mymarket' %}" class="text-black text-decoration-none" style="font-size: 30px;"><img
+                            src="{{market.image.url}}" class="rounded-circle me-2" alt="" width="70px" height="70px"
+                            style="object-fit: cover;">{{market.name}}</a>
+                </div>
+
+                <div class="col d-flex justify-content-end align-items-center">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProduct"><i
+                            class="uil uil-plus"></i> Add Product</button>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in products %}
+                            <tr>
+                                <td><img src="{{product.image.url}}" alt="{{product.name}}" width="40px"></td>
+                                <td><a href="{% url 'product-detail' market_name=market.name product_name=product.name %}" style="text-decoration: none; color: black;">{{product.name}}</a></td>
+                                <td>{{product.category}}</td>
+                                <td>Rp{{product.price}}</td>
+                                <td><button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#editProduct{{product.id}}"><i class="uil uil-edit fs-5"></i></button>
+                                    <button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#deleteProduct{{product.id}}"><i class="uil uil-trash-alt fs-5 text-danger"></i></button></td>
+                            </tr>
+
+                            <!-- Modal Delete Product -->
+                            <div class="modal fade" id="deleteProduct{{product.id}}" tabindex="-1" aria-labelledby="deleteProductLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="deleteProductLabel">Confirmation</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure want to delete <b>{{ product.name }}</b>?
+                                            <div class="d-flex justify-content-end">
+                                                <button type="button" class="btn btn-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                                                <a href="{% url 'delete-product' product_name=product.name %}" class="btn btn-danger">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Edit Product-->
+                            <div class="modal fade" id="editProduct{{product.id}}" tabindex="-1" aria-labelledby="editProductLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="editProductLabel">Edit {{ product.name }}</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="{% url 'edit-product' product_name=product.name %}" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            
+                                            <div class="modal-body my-3">
+                                                {% for field in editform %}
+                                                <div class="row mb-3 justify-content-center">
+                                                    <div class="col-sm-2">
+                                                        {{field.label_tag}}
+                                                    </div>
+                                                    <div class="col-sm-8 text-secondary">
+                                                        {{field}}
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-dark me-2" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-warning"><i class="uil uil-edit"></i> Edit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+<!-- Modal Add Product-->
+<div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addProductLabel">Add Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="modal-body my-3">
+                    {% for field in addform %}
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-sm-2">
+                            {{field.label_tag}}
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            {{field}}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark me-2" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success"><i class="uil uil-plus"></i> Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

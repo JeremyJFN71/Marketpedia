@@ -1,0 +1,250 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'message.html' %}
+
+<div class="container my-5">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="{{user.profile.image.url}}" alt="{{user.profile.user.username}}"
+                                class="rounded-circle border border-dark border-5" width="110" height="110"
+                                style="object-fit: cover;">
+
+                            <div class="dropdown-center">
+                                <button class="btn nav-link btn-link" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <a href="">Change photo</a>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="{{user.profile.image.url}}" target="_blank">View
+                                            Photo</a>
+                                    </li>
+
+                                    <li>
+                                        <button type="button" class="btn btn-primary dropdown-item"
+                                            data-bs-toggle="modal" data-bs-target="#uploadPhoto">
+                                            Upload Photo
+                                        </button>
+                                    </li>
+
+                                    <li>
+                                        <button type="button" class="btn btn-primary dropdown-item"
+                                            data-bs-toggle="modal" data-bs-target="#removePhoto">
+                                            Remove Photo
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="mt-3">
+                                <h4><b>{{user}}</b></h4>
+                                <p class="text-secondary mb-3">{{user.email}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-8">
+
+                <div class="card mb-3">
+                    <div class="card-body">
+
+                        <!-- Profile -->
+                        <div class="row">
+                            <h5><b>Profile</b></h5>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Full Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {% if user.profile.fullname %}
+                                {{user.profile.fullname}}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Gender</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {% if user.profile.gender == 'M' %}
+                                Male
+                                {% elif user.profile.gender == 'F' %}
+                                Female
+                                {% else %}
+                                -
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Mobile Phone</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {% if user.profile.mobile_phone %}
+                                {{user.profile.mobile_phone}}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Address</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {% if user.profile.address %}
+                                {{user.profile.address}}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a class="btn btn-dark px-4" href="/edit-profile" name="edit-profile">Edit</a>
+                            </div>
+                        </div>
+                        <!-- End of Profile -->
+
+                        <!-- Account -->
+                        <div class="row mt-5">
+                            <h5><b>Account</b></h5>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{user.email}}
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Password</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                ********
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a class="btn btn-dark px-4" href="/edit-account" name="edit-account">Edit</a>
+                                <button type="button" class="btn btn-danger ms-2" data-bs-toggle="modal"
+                                    data-bs-target="#deleteAccount">Delete Account</button>
+                            </div>
+                        </div>
+                        <!-- End of Account -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Delete Account -->
+<div class="modal fade" id="deleteAccount" tabindex="-1" aria-labelledby="deleteAccountLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteAccountLabel">Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure want to delete this account?<br>
+                Please type <b>{{user}}</b> to confirm.
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="text" class="my-3" name="confirmUsername" style="width: 100%;">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger" name="deleteAccount">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Upload Photo Profile-->
+<div class="modal fade" id="uploadPhoto" tabindex="-1" aria-labelledby="uploadPhotoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="uploadPhotoLabel">Upload Photo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
+                        <label for="id_image" class="btn btn-outline-dark my-3">Upload Photo</label>
+                        <div hidden>
+                            {{p_form.image}}
+                            <!-- name=image id=id_image -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-end">
+                    <button type="button" class="btn btn-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-success" type="submit" name="updatePicture">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Modal Remove Photo Profile-->
+<div class="modal fade" id="removePhoto" tabindex="-1" aria-labelledby="removePhotoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="removePhotoLabel">Remove Photo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Remove your profile photo?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger" href="{% url 'remove-picture' %}">Remove</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

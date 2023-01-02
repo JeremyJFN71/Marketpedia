@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan&display=swap');
+
+:root {
+    --main-font: 'League Spartan', sans-serif;
+    --color-bg-nav: rgb(30, 30, 30);
+    --color-aqua: rgb(0, 213, 255);
+}
+
+p {
+    margin: 0;
+}
+
+textarea{
+    resize: none;
+}
+
+body {
+    color: black;
+    font-family: var(--main-font);
+    background-color: rgb(184, 184, 184);
+}
+
+.navbar-brand {
+    font-size: 30px;
+}
+
+nav.navbar {
+    padding: 0;
+}
+
+.nav-item a {
+    padding: 25px 0px;
+}
+
+.img-category {
+    width: 50px;
+    transition: 0.2s;
+}
+
+.img-category:hover {
+    transform: scale(1.2);
+    transition: 0.2s;
+}
+
+.row-container {
+    background-color: white;
+    margin: 0px;
+}
+
+
+/* Desktop */
+@media (min-width: 990px) {
+    .form-search {
+        width: 400px;
+    }
+
+    .navbar-nav {
+        margin-right: 30px;
+    }
+
+    .btn-user {
+        margin-left: 10px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 990px) {
+    /* .navbar-nav, .nav-link, .user {
+        text-align: center;
+    } */
+
+    .nav-item a {
+        padding: 25px 0px;
+    }
+
+    .dropdown button{
+        padding: 25px 0px;
+    }
+
+    .navbar-nav hr{
+        margin: 0;
+    }
+
+    .btn-user {
+        margin-bottom: 10px;
+    }
+}

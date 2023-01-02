@@ -1,0 +1,57 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block navbar %}
+
+{% include 'message.html' %}
+
+{% endblock navbar %}
+
+{% block content %}
+
+<div class="container" style="height: 100vh;">
+  <div class="row justify-content-center">
+    <div class="col-lg-5">
+      <div class="card shadow-lg bg-dark border-0 rounded-lg mt-5" style="border-radius: 10px;">
+        <div class="card-header">
+          <div class="row text-center">
+            <div class="col mt-4">
+              <a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt="" width="80px"></a>
+            </div>
+          </div>
+          <h3 class="text-center font-weight-light text-white my-4">{{title}}</h3>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="form-floating mb-3">
+              <input class="form-control" name="username" id="username" type="text" placeholder="Username" required
+                autocomplete="off" />
+              <label for="username">Username</label>
+            </div>
+
+            <!-- Password -->
+            <div class="form-floating mb-3">
+              <input class="form-control" name="password" id="password" type="password" placeholder="Password" required
+                autocomplete="off" />
+              <label for="password">Password</label>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid gap-2 mt-4 mb-0">
+              <button type="submit" class="btn text btn-primary mb-4">Sign In</button>
+              <p class="text-white mb-4">Don't have an account? <a href="{% url 'signup' %}" class="text-white"><b>Sign Up</b></a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}

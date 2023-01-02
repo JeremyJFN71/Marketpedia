@@ -1,0 +1,57 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'message.html' %}
+
+<div class="container mt-5 mb-2">
+    <div class="card" style="border: 1px solid gray; z-index: 99;">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col">
+                    <span class="text-black text-decoration-none" style="font-size: 30px;"><img src="{{market.image.url}}" class="rounded-circle me-2" alt="" width="70px" height="70px" style="object-fit: cover;">{{market.name}}</span>
+                </div>
+
+                {% if user.market == market %}
+                <div class="col d-flex justify-content-end align-items-center">
+                    <a href="{% url 'edit-market' %}" class="btn btn-warning">Edit Market</a>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card" style="padding: 10px; margin-top: -5px;">
+        <div class="card-body">
+            <h5 class="text-center">PRODUCTS</h5>
+
+            <div class="row">
+    
+                {% for product in products %}
+    
+                <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
+                    <div class="card text-center">
+                        <img src="{{product.image.url}}" class="card-img-top" alt="{{product.name}}"
+                            style="object-fit: contain;" height="200px">
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text mt-2">Rp {{product.price}}</p>
+                            <a href="{% url 'product-detail' market_name=product.seller_id product_name=product.name %}" class="btn btn-dark d-grid">Buy</a>
+                        </div>
+                    </div>
+                </div>
+    
+                {% endfor %}
+    
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+{% endblock content %}

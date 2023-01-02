@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'message.html' %}
+
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            <h1>Create Market</h1>
+        </div>
+        <div class="card-body">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        {{field.label_tag}}
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{field}}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="row">
+                    <div class="col-sm-9 text-secondary">
+                        <button type="submit" class="btn btn-dark px-4 me-2">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+
+{% endblock content %}
