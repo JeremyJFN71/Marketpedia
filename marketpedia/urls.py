@@ -6,7 +6,10 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+
     path('products/', views.products, name='products'),
+    path('category/<str:category>', views.category, name='category'),
+
     path('contact/', views.contact, name='contact'),
 
     path('signin/', views.signin, name='signin'),

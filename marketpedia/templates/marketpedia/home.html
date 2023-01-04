@@ -50,7 +50,7 @@
         {% for category in categories %}
         <div class="col-lg-2 col-md-3 col-sm-4 col-6">
             <div class="menu-kategori">
-                <a href="#"><img src="{% static 'img/shirt.png' %}" alt="" width="100px" class="img-category mt-3"></a>
+                <a href="/category/{{ category.slug }}"><img src="{% static 'img/'%}{{ category.slug }}.png" alt="" height="60px" class="img-category mt-3"></a>
                 <p class="mt-2">{{ category.name }}</p>
             </div>
         </div>

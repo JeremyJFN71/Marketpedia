@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block styles %}
+<style>
+  .fa-google {
+    background: linear-gradient(to bottom left, transparent 49%, #fbbc05 50%) 0
+                25%/48% 40%,
+        linear-gradient(to top left, transparent 49%, #fbbc05 50%) 0 75%/48% 40%,
+        linear-gradient(-40deg, transparent 53%, #ea4335 54%),
+        linear-gradient(45deg, transparent 46%, #4285f4 48%), #34a853;
+        background-repeat: no-repeat;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+  }
+</style>
+{% endblock styles %}
+
+{% block navbar %}
+{% include 'message.html' %}
+{% endblock navbar %}
+
+{% block content %}
+
+<div class="container" style="height: 100vh;">
+  <div class="row justify-content-center">
+    <div class="col-lg-5">
+      <div class="card shadow-lg bg-dark border-0 rounded-lg mt-5" style="border-radius: 10px;">
+        <div class="card-header">
+          <div class="row text-center">
+            <div class="col mt-4">
+              <a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt="" width="80px"></a>
+            </div>
+          </div>
+          <h3 class="text-center font-weight-light text-white my-4">{{title}}</h3>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="form-floating mb-3">
+              <input class="form-control" name="username" id="username" type="text" placeholder="Username" required
+                autocomplete="off" />
+              <label for="username">Username</label>
+            </div>
+
+            <!-- Password -->
+            <div class="form-floating mb-3">
+              <input class="form-control" name="password" id="password" type="password" placeholder="Password" required
+                autocomplete="off" />
+              <label for="password">Password</label>
+            </div>
+
+            <div class="d-grid gap-2 mt-4 mb-0">
+              <!-- Submit -->
+              <button type="submit" class="btn text btn-primary">Sign In</button>
+              <span class="text-center mt-3 text-white" style="border-bottom:1px solid grey; font-size: 16px">or sign in with</span>
+              <a href="{% provider_login_url 'google' %}" class="btn my-4 social" style="border: 1px solid black; background-color: white;">
+                <i class="fab fa-google"></i>
+                <span>Google</span>              
+              </a>
+              <p class="text-white mb-4">Don't have an account? <a href="{% url 'signup' %}" class="text-white"><b>Sign Up</b></a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}

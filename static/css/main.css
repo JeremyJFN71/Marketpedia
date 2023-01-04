@@ -2,8 +2,12 @@
 
 :root {
     --main-font: 'League Spartan', sans-serif;
-    --color-bg-nav: rgb(30, 30, 30);
-    --color-aqua: rgb(0, 213, 255);
+}
+
+
+button:focus {
+    outline: none;
+    border: none;
 }
 
 p {
@@ -33,7 +37,6 @@ nav.navbar {
 }
 
 .img-category {
-    width: 50px;
     transition: 0.2s;
 }
 

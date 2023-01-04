@@ -35,8 +35,8 @@
         "model":"marketpedia.Category",
         "pk":5,
         "fields":{
-            "name":"Beauty Care",
-            "slug":"beauty-care"
+            "name":"Cosmetics",
+            "slug":"cosmetics"
         }
     },
     {

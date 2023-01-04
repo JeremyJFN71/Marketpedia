@@ -1,12 +1,5 @@
 {% load static %}
 
-<style>
-  button:focus {
-    outline: none;
-    border: none;
-  }
-</style>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container">
     <a class="navbar-brand" href="{% url 'home' %}">
@@ -20,8 +13,8 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
 
-      <form class="d-flex ms-auto my-4 my-lg-0" role="search">
-        <input class="form-control me-2 form-search rounded-pill px-3" type="search" placeholder="Search" aria-label="Search">
+      <form class="d-flex ms-auto my-4 my-lg-0" role="search" action="{% url 'products' %}">
+        <input class="form-control me-2 form-search rounded-pill px-3" type="search" placeholder="Search" aria-label="Search" name="search" value="{{ searched }}">
         <button class="btn" type="submit"><i class="uil uil-search text-white fs-5"></i></button>
       </form>
 
@@ -33,7 +26,7 @@
         <hr>
 
         <li class="nav-item">
-          <a class="nav-link {{product}}" href="{% url 'products' %}">Product</a>
+          <a class="nav-link {{product}}" href="{% url 'products' %}">Products</a>
         </li>
 
         <hr>

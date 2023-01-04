@@ -44,9 +44,9 @@ class AddProduct(forms.ModelForm):
         }
 
         widgets = {
-            'image':forms.FileInput(attrs={'class':'form-control'}),
-            'name':forms.TextInput(attrs={'class':'form-control'}),
-            'description':forms.Textarea(attrs={'class':'form-control'}),
-            'price':forms.TextInput(attrs={'class':'form-control'}),
-            'category':forms.Select(attrs={'class':'form-control'}),
+            'image':forms.FileInput(attrs={'class':'form-control', 'autocomplete':'off'}),
+            'name':forms.TextInput(attrs={'class':'form-control', 'autocomplete':'off'}),
+            'description':forms.Textarea(attrs={'class':'form-control', 'autocomplete':'off'}),
+            'price':forms.TextInput(attrs={'class':'form-control', 'autocomplete':'off'}),
+            'category':forms.Select(attrs={'class':'form-control', 'autocomplete':'off'}),
         }

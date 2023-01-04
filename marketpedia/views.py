@@ -25,11 +25,16 @@ def home(request):
 
 def products(request):
     products = Product.objects.all().order_by('-id')
+    searched = ''
+    if request.GET.get('search', False):
+        searched = request.GET['search']
+        products = Product.objects.filter(name__icontains=searched)
 
     context = {
         'title':'Products',
-        'product': 'active',
-        'products' : products,
+        'product':'active',
+        'products':products,
+        'searched':searched,
     }
 
     return render(request, 'marketpedia/products.html', context)
@@ -40,12 +45,25 @@ def productdetail(request, market_name, product_name):
     product = Product.objects.filter(seller_id=market.name).get(name=product_name)
 
     context = {
-        'title': product.name,
+        'title':product.name,
         'product':product,
         'market':market,
     }
 
     return render(request, 'marketpedia/product-detail.html', context)
+
+
+def category(request, category):
+    category = Category.objects.get(slug=category)
+    products = Product.objects.filter(category=category.id)
+
+    context = {
+        'title':'Products',
+        'product':'active',
+        'products':products,
+    }
+
+    return render(request, 'marketpedia/products.html', context)
 
 
 def contact(request):
