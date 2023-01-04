@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django import forms
 import os
 
 from .models import *
@@ -104,9 +103,12 @@ def signup(request):
             
             if username_check_existing:
                 messages.error(request, 'Username already exist')
+                return redirect('/signup')
+                
 
             elif email_check_existing:
                 messages.error(request, 'Email already exist')
+                return redirect('/signup')
 
             else:
                 myuser = User.objects.create_user(username=username, email=email, password=password1)
@@ -135,6 +137,11 @@ def myprofile(request):
     if request.method=='POST':
         if 'updatePicture' in request.POST:
             p_form = PictureUpdate(request.POST, request.FILES, instance=request.user.profile)
+
+            if os.path.exists(request.user.profile.image.path):
+                if request.user.profile.image.path != 'D:\Coding\project\Marketpedia\media\profile_images\default.png':
+                    os.remove(request.user.profile.image.path)
+
             if p_form.is_valid():
                 p_form.save()
 
@@ -152,6 +159,7 @@ def myprofile(request):
                 return redirect('/')
             else:
                 messages.error(request, 'Cancel delete account')
+                return redirect('/myprofile')
 
     if request.method=='GET':
         context = {
@@ -165,6 +173,9 @@ def myprofile(request):
 @login_required
 def removepicture(request):
     profile = Profile.objects.get(id=request.user.profile.id)
+    if os.path.exists(profile.image.path):
+        if profile.image.path != 'D:\Coding\project\Marketpedia\media\profile_images\default.png':
+            os.remove(profile.image.path)
     profile.image = 'profile_images/default.png'
     profile.save()
     
@@ -287,10 +298,6 @@ def editmarket(request):
     market = Market.objects.get(name=request.user.market)
     products = Product.objects.filter(seller_id=market.name).order_by('-id')
     addform = AddProduct()
-    initial_data = {
-        'name':'cok'
-    }
-    editform = EditProduct(initial=initial_data)
 
     if request.method=='POST':
         addform = AddProduct(request.POST, request.FILES)
@@ -308,7 +315,6 @@ def editmarket(request):
             'market':market,
             'products':products,
             'addform':addform,
-            'editform':editform,
         }
         return render(request, 'marketpedia/market-edit.html', context)
 
@@ -317,11 +323,11 @@ def editproduct(request, product_name):
     product = Product.objects.get(seller_id=request.user.market.name, name=product_name)
 
     if request.method=='POST':
-        if len(request.FILES['image'])>0:
+        if request.FILES.get('product_image', False):
             if os.path.exists(product.image.path):
                 os.remove(product.image.path)
-            product.image = request.FILES['image']
-        product.name = request.POST['name']
+            product.image = request.FILES['product_image']
+        product.name = request.POST['product_name']
         product.description = request.POST['description']
         product.price = request.POST['price']
         product.category = request.POST['category']

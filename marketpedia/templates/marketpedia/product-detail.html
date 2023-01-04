@@ -9,53 +9,48 @@
 {% include 'message.html' %}
 
 <div class="container my-5">
-    <div class="row row-product">
-
-        <div class="col-lg-5">
-            <figure class="figure">
-                <img src="{{product.image.url}}" class="figure-img img-fluid" alt="..."
-                    style="object-fit: contain; border-radius: 5px; width: 450px;">
-                <figcaption class="figure-caption d-flex justify-content-evenly">
-                    <a href="">
+    <div class="row rounded row-product p-5">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="row">
+                    <figure class="figure">
                         <img src="{{product.image.url}}" class="figure-img img-fluid" alt="..."
-                            style="object-fit: contain; border-radius: 5px; width: 70px;">
-                    </a>
-
-                    <a href="">
-                        <img src="{{product.image.url}}" class="figure-img img-fluid" alt="..."
-                            style="object-fit: contain; border-radius: 5px; width: 70px;">
-                    </a>
-
-                    <a href="">
-                        <img src="{{product.image.url}}" class="figure-img img-fluid" alt="..."
-                            style="object-fit: contain; border-radius: 5px; width: 70px;">
-                    </a>
-
-                    <a href="">
-                        <img src="{{product.image.url}}" class="figure-img img-fluid" alt="..."
-                            style="object-fit: contain; border-radius: 5px; width: 70px;">
-                    </a>
-                </figcaption>
-            </figure>
-        </div>
-
-        <div class="col-lg-7">
-            <h4>{{product.name}}</h4>
-            <div class="underline"></div>
+                            style="object-fit: contain; border-radius: 10px; width: 100%;">
+                    </figure>.
+                    <h1>
+                        <b>{{product.name}}</b>
+                    </h1>
+                </div>
+            </div>
             
-            <button class="btn btn-dark btn-sm"><i class="uil uil-minus"></i></button>
-            <span class="mx-2">1</span>
-            <button class="btn btn-warning btn-sm"><i class="uil uil-plus text-white"></i></button>
-
-            <div class="btn-product mt-5">
-                <a href="#" class="btn btn-dark btn-lg" style="font-size: 14px;"><i class="uil uil-shopping-cart" style="font-size: 14px;"></i> Add to Cart</a>
-                <a href="#" class="btn btn-warning btn-lg" style="font-size: 14px;">Buy now</a>
+            <div class="col-lg-5 mb-4">
+                <div class="d-flex w-90 align-items-center justify-content-between px-1">
+                    <h2 class="fw-bold">PRICE</h2>
+                    <span class="fs-1">RP. 300.000</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-around bg-white shadow-sm rounded py-3">
+                    <span class="fs-5 fw-bold">Jumlah Pesanan</span>
+                    <div class="w-50 shadow d-flex justify-content-between align-items-center">
+                        <button class="btn btn-light btn-md shadow"><i class="uil uil-minus"></i></button>
+                        <span class="mx-2">1</span>
+                        <button class="btn btn-dark btn-md shadow"><i class="uil uil-plus"></i></button>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn btn-outline-dark btn-lg me-1 d-block my-3 shadow fw-bold rounded-pill" style="font-size: 18px;"><i class="uil uil-shopping-cart" style="font-size: 18px;"></i> Add to Cart</a>
+                <a href="#" class="btn btn-success btn-lg d-block shadow fw-bold rounded-pill" style="font-size: 18px;">Buy now</a>
             </div>
         </div>
-
+        <div class="row">
+            <a class="text-black text-decoration-none my-3" href="{% url 'market' market_name=market.name %}" style="font-size: 30px;">
+                <img src="{{ market.image.url }}" alt="" class="rounded-circle" width="50px" height="50px">
+                <span class="fs-2 fw-bold">{{ market.name }}</span>
+                <sup><i class="bi bi-patch-check-fill" style="color: #0CBB6B"></i></sup>
+            </a>
+            <p class="mb-4">{{ product.description }}</p>
+        </div>
     </div>
 </div>
-
 <br><br><br><br> 
 
 {% endblock content %}
