@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Market, Product
+from .models import Profile, Market, Product, Category
 
 class PictureUpdate(forms.ModelForm):
     class Meta:
@@ -48,5 +48,5 @@ class AddProduct(forms.ModelForm):
             'name':forms.TextInput(attrs={'class':'form-control'}),
             'description':forms.Textarea(attrs={'class':'form-control'}),
             'price':forms.TextInput(attrs={'class':'form-control'}),
-            'category':forms.TextInput(attrs={'class':'form-control'}),
+            'category':forms.Select(attrs={'class':'form-control'}),
         }

@@ -11,11 +11,13 @@ from .forms import *
 # Create your views here.
 def home(request):
     products = Product.objects.all().order_by('-id')[:6]
+    categories = Category.objects.all().order_by('id')
 
     context = {
         'title':'Home',
         'home': 'active',
-        'products' : products
+        'categories' : categories,
+        'products' : products,
     }
 
     return render(request, 'marketpedia/home.html', context)
@@ -321,6 +323,7 @@ def editmarket(request):
 
 def editproduct(request, product_name):
     product = Product.objects.get(seller_id=request.user.market.name, name=product_name)
+    category = Category.objects.get(name=request.POST['category'])
 
     if request.method=='POST':
         if request.FILES.get('product_image', False):
@@ -330,11 +333,11 @@ def editproduct(request, product_name):
         product.name = request.POST['product_name']
         product.description = request.POST['description']
         product.price = request.POST['price']
-        product.category = request.POST['category']
+        product.category = category
         product.save()
 
-        messages.success(request, 'Your Product has been updated successfully')
-        return redirect('/edit-market')
+    messages.success(request, 'Your Product has been updated successfully')
+    return redirect('/edit-market')
 
 
 def deleteproduct(request, product_name):

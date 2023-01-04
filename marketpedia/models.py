@@ -30,12 +30,20 @@ class Market(models.Model):
         return f'{self.name}'
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    slug = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class Product(models.Model):
     image = models.ImageField(upload_to='product_images')
     name = models.CharField(max_length=50)
     description = models.TextField()
     price = models.PositiveIntegerField()
-    category = models.CharField(max_length=50)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     seller = models.ForeignKey(Market, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
