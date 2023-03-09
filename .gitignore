@@ -1,3 +1,5 @@
-/env
-/marketpedia/migrations/
-/media/
+env/
+marketpedia/migrations/
+media/
+marketpedia/__pycache__/
+myproject/__pycache__/
